@@ -1,0 +1,23 @@
+.row
+  %h1 
+    Survey ##{@survey.id}
+
+.row
+  .table-responsive
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Question
+          %th Response
+
+      %tbody
+        - @responses.each do |response|
+          %tr
+            %td= response.question.text
+            %td= response.text
+
+    %br
+
+= link_to 'Edit', edit_survey_path(@survey)
+\|
+= link_to 'Back', surveys_path

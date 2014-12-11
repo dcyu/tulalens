@@ -1,0 +1,19 @@
+%h1
+  = @facility.name
+  Facility
+
+
+-@facility.surveys.map{|survey| survey.responses}.flatten.group_by {|i| i.question_id}.each do |block|
+  -@responses = block.last
+  -@question = @responses.last.question
+  = render 'chart'
+  .row
+    .col-md-6
+      %div{id: "chart-#{@question.id}"}
+      -if @chart
+        = render_chart(@chart, "chart-#{@question.id}")
+
+
+= link_to 'Edit', edit_facility_path(@facility)
+\|
+= link_to 'Back', facilities_path

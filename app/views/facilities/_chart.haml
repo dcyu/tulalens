@@ -1,0 +1,16 @@
+:ruby
+  data_table = GoogleVisualr::DataTable.new
+  texts = @responses.map(&:text).uniq
+  if texts.count < 10
+    data_table.new_column('string', @question.text)
+    data_table.new_column('number', @question.text)
+
+    rows = []
+    texts.each do |text|
+      rows << [text, @responses.select{|response| response.text == text}.count]
+    end
+
+    data_table.add_rows(rows)
+    option = { width: 600, height: 400, title: @question.text }
+    @chart = GoogleVisualr::Interactive::PieChart.new(data_table, option)
+  end

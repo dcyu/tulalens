@@ -1,0 +1,34 @@
+.row
+  %h1
+    Question:
+    = @question.text
+
+-if @chart
+  .row
+    #chart
+    = render_chart(@chart, 'chart')
+
+.row
+  .table-responsive
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Response
+          %th Survey
+          %th 
+
+      %tbody
+        - @responses.each do |response|
+          %tr
+            %td
+              = response.text
+            %td
+              -if response.survey
+                %a{:href => "#{survey_path(response.survey)}"}
+                  Survey ##{response.survey.id}
+            %td
+              =link_to 'Edit', edit_response_path(response)
+
+= link_to 'Edit', edit_question_path(@question)
+\|
+= link_to 'Back', questions_path
